@@ -1,0 +1,63 @@
+<section class="calculator-shell" id="calculator" aria-labelledby="calculator-title">
+  <form class="calculator-form" data-calculator novalidate>
+    <div class="date-row">
+      <label class="date-field"><span>First person’s date of birth</span><input name="firstDate" type="date" value="1988-06-04" required /><small>DD/MM/YYYY</small></label>
+      <button class="swap-connector" type="button" data-swap aria-label="Swap dates">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 3-3m-3 3 3 3M7 7h10M17 17l-3-3m3 3-3 3M17 17H7" /></svg>
+      </button>
+      <label class="date-field"><span>Second person’s date of birth</span><input name="secondDate" type="date" value="1993-01-19" required /><small>DD/MM/YYYY</small></label>
+    </div>
+    <p class="form-error" data-error role="alert" hidden></p>
+    <div class="form-actions">
+      <button class="button primary" type="submit">Calculate age difference</button>
+      <div class="secondary-actions">
+        <button class="button secondary" type="button" data-swap>↔ <span>Swap dates</span></button>
+        <button class="button secondary" type="reset">↶ <span>Reset</span></button>
+      </div>
+    </div>
+    <div class="result" data-result aria-live="polite">
+      <div class="result-label"><span class="check" aria-hidden="true">✓</span><h2 id="calculator-title">Exact age difference</h2></div>
+      <p class="result-statement" data-statement>The first person is older by</p>
+      <p class="result-value"><strong data-years>4</strong> <span data-year-unit>years</span> <strong data-months>7</strong> <span data-month-unit>months</span> <strong data-days>15</strong> <span data-day-unit>days</span></p>
+      <div class="result-totals"><span data-total-days>1,690 days apart</span><span data-weeks>241 weeks and 3 days</span></div>
+      <p class="privacy-note"><span aria-hidden="true">▣</span> Your dates stay on this device.</p>
+    </div>
+  </form>
+</section>
+
+<script>
+  import { calendarDifference, parseDateInput } from '../lib/dateDifference.js';
+  const bindCalculator = () => {
+    const form = document.querySelector<HTMLFormElement>('[data-calculator]');
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = 'true';
+    const first = form.elements.namedItem('firstDate') as HTMLInputElement;
+    const second = form.elements.namedItem('secondDate') as HTMLInputElement;
+    const error = form.querySelector<HTMLElement>('[data-error]')!;
+    const result = form.querySelector<HTMLElement>('[data-result]')!;
+    const render = () => {
+      if (!first.value || !second.value) { error.textContent = 'Choose both dates of birth.'; error.hidden = false; result.hidden = true; return; }
+      const a = parseDateInput(first.value); const b = parseDateInput(second.value);
+      const today = new Date(); const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+      if (a.getTime() > todayUtc || b.getTime() > todayUtc) { error.textContent = 'Dates of birth cannot be in the future.'; error.hidden = false; result.hidden = true; return; }
+      const diff = calendarDifference(a, b);
+      error.hidden = true; result.hidden = false;
+      form.querySelector<HTMLElement>('[data-statement]')!.textContent = a.getTime() === b.getTime() ? 'Both people have the same date of birth' : `${a < b ? 'The first' : 'The second'} person is older by`;
+      form.querySelector('[data-years]')!.textContent = String(diff.years);
+      form.querySelector('[data-months]')!.textContent = String(diff.months);
+      form.querySelector('[data-days]')!.textContent = String(diff.days);
+      form.querySelector('[data-year-unit]')!.textContent = diff.years === 1 ? 'year' : 'years';
+      form.querySelector('[data-month-unit]')!.textContent = diff.months === 1 ? 'month' : 'months';
+      form.querySelector('[data-day-unit]')!.textContent = diff.days === 1 ? 'day' : 'days';
+      form.querySelector('[data-total-days]')!.textContent = `${diff.totalDays.toLocaleString('en-IN')} days apart`;
+      const weeks = Math.floor(diff.totalDays / 7), remainder = diff.totalDays % 7;
+      form.querySelector('[data-weeks]')!.textContent = `${weeks.toLocaleString('en-IN')} weeks and ${remainder} ${remainder === 1 ? 'day' : 'days'}`;
+    };
+    form.addEventListener('submit', (event) => { event.preventDefault(); render(); });
+    form.querySelectorAll<HTMLButtonElement>('[data-swap]').forEach((button) => button.addEventListener('click', () => { [first.value, second.value] = [second.value, first.value]; render(); }));
+    form.addEventListener('reset', () => setTimeout(() => { first.value = ''; second.value = ''; error.hidden = true; result.hidden = true; }, 0));
+    render();
+  };
+  bindCalculator();
+  document.addEventListener('astro:page-load', bindCalculator);
+</script>

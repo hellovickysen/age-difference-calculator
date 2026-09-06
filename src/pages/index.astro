@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Calculator from '../components/Calculator.astro';
+import { getCollection } from 'astro:content';
+
+const featuredIds = [
+  'how-to-calculate-age-difference',
+  'birth-year-difference-vs-exact-age-gap',
+  'completed-age-vs-running-age-india',
+  'calculate-age-gap-leap-years',
+  'days-between-two-birthdays',
+  'sibling-age-difference',
+];
+const featuredPosts = await getCollection('blog', ({ data }) => !data.draft && data.featured);
+const postsById = new Map(featuredPosts.map((post) => [post.id, post]));
+const posts = featuredIds.map((id) => postsById.get(id)).filter((post) => post !== undefined);
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Age Difference Calculator', url: 'https://agedifferencecalculator.xyz/', inLanguage: 'en-IN', author: { '@type': 'Person', name: 'Priyabrata Sen', url: 'https://agedifferencecalculator.xyz/author/priyabrata-sen/' } },
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Age Difference Calculator', url: 'https://agedifferencecalculator.xyz/', applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any', browserRequirements: 'Requires JavaScript', offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' }, description: 'Calculate the exact age difference between two people in years, months and days.', author: { '@type': 'Person', name: 'Priyabrata Sen' } },
+];
+---
+<BaseLayout title="Age Difference Calculator – Exact Age Gap" description="Calculate the exact age difference between two people in years, months and days. Find who is older, total days apart and more." active="calculator" structuredData={ld}>
+  <section class="page-hero wrap">
+    <h1>Age Difference Calculator</h1>
+    <p>Enter two dates of birth to find the exact age gap in years, months and days.</p>
+  </section>
+  <Calculator />
+
+  <section class="method-section" id="how-it-works">
+    <div class="wrap">
+      <div class="method-intro"><h2>How the calculation works</h2><p>We compare the earlier date with the later date using real calendar years, months and days.</p></div>
+      <div class="method-steps">
+        <div class="method-step"><span class="step-number">1</span><div><h3>Count complete years</h3><p>Move forward by full calendar years without passing the later date.</p></div></div>
+        <div class="method-step"><span class="step-number">2</span><div><h3>Count complete months</h3><p>Continue by whole calendar months, allowing for months of different lengths.</p></div></div>
+        <div class="method-step"><span class="step-number">3</span><div><h3>Count the remaining days</h3><p>The days left form the final part of the exact age difference.</p></div></div>
+      </div>
+      <div class="example-band"><div><small>Worked example</small><strong>4 June 1988 → 19 January 1993</strong></div><div><small>Exact age difference</small><strong>4 years, 7 months and 15 days</strong></div><p class="method-note">The calculation accounts for leap years and month lengths. It does not divide by 365.</p></div>
+      <div class="comparison-note"><span class="comparison-icon" aria-hidden="true">▦</span><div><h3>More than a year-number comparison</h3><p>Two people born in different years may be only days apart. Comparing complete dates gives the true gap.</p></div></div>
+    </div>
+  </section>
+
+  <section class="guides-section wrap" aria-labelledby="guides-title">
+    <h2 id="guides-title">Helpful age difference guides</h2>
+    <p class="section-lede">Clear explanations for the questions people ask after comparing two dates of birth.</p>
+    <div class="guide-grid">{posts.map((post) => <a class="guide-link" href={`/blog/${post.id}/`}><span>{post.data.title}</span></a>)}</div>
+  </section>
+
+  <section class="pillar-section" aria-labelledby="pillar-title">
+    <div class="pillar-layout wrap">
+      <article class="pillar-content">
+        <header class="pillar-header">
+          <h2 id="pillar-title">Age Difference Calculator: the complete guide</h2>
+          <p>An age difference calculator compares two full dates of birth. It shows the gap in years, months and days. This is better than subtracting only the birth years because the month and day also matter.</p>
+        </header>
+
+        <h3 id="what-is-an-age-difference-calculator">What is an age difference calculator?</h3>
+        <p>An Age Difference Calculator compares two dates. You enter both dates of birth, and it finds the earlier date, shows who is older and gives the exact gap. The main answer may be <strong>4 years, 7 months and 15 days</strong>. It also shows total days and weeks.</p>
+        <p>This is different from comparing only the year numbers. Someone born on 31 December 2000 and someone born on 1 January 2001 have different birth years, but their actual age difference is only one day. Read more about <a href="/blog/birth-year-difference-vs-exact-age-gap/">birth-year difference versus exact age difference</a>.</p>
+
+        <h3 id="how-to-use">How to use the Age Difference Calculator</h3>
+        <ol>
+          <li>Enter the first person’s complete date of birth.</li>
+          <li>Enter the second person’s complete date of birth.</li>
+          <li>Select <strong>Calculate age difference</strong>.</li>
+          <li>Read the exact calendar gap, total days and total weeks.</li>
+        </ol>
+        <p>The dates can be entered in either order. The calculator automatically determines who is older. Use the swap button when you want to reverse the fields, or reset the calculator to compare two new dates.</p>
+
+        <h3 id="understanding-result">How to understand the result</h3>
+        <p>The years, months and days make one full answer. They are not three separate totals. If the result says 4 years, 7 months and 15 days, move forward four full years, then seven full months, then fifteen days from the earlier birth date.</p>
+        <div class="result-explainer" role="group" aria-label="Example age difference result">
+          <div><span>Earlier birth date</span><strong>4 June 1988</strong></div>
+          <div><span>Later birth date</span><strong>19 January 1993</strong></div>
+          <div><span>Exact difference</span><strong>4 years, 7 months, 15 days</strong></div>
+          <div><span>Total elapsed time</span><strong>1,690 days</strong></div>
+        </div>
+        <p>Total days answer a different question: the number of midnights crossed between the two dates. Total weeks are calculated from that day count. For a fuller explanation, see <a href="/blog/age-difference-total-days-weeks-months/">age difference in days, weeks and months</a>.</p>
+
+        <h3 id="calendar-accuracy">Why the calculator uses real calendar dates</h3>
+        <p>A calendar year is not always 365 days, and a calendar month is not a fixed number of days. February may contain 28 or 29 days, while other months contain 30 or 31. Dividing the total number of days by 365 or dividing by 30 can therefore produce a decimal estimate rather than an exact calendar result.</p>
+        <p>This calculator counts full years first, full months second and the days left last. If a month does not have the same day number, it uses the last valid day of that month. Read <a href="/methodology/">how the calculator works</a>, or learn about <a href="/blog/calculate-age-gap-leap-years/">leap years</a> and <a href="/blog/month-lengths-age-calculation/">months with different lengths</a>.</p>
+
+        <h3 id="exact-gap-vs-completed-age">Exact age gap versus completed-age difference</h3>
+        <p>The exact gap between two dates of birth never changes. But the ages shown in full years can look different during the year. This happens when one person has had a birthday and the other has not.</p>
+        <p>For example, two people may have a fixed gap of 4 years and 7 months. At one point they could be shown as ages 35 and 30, a five-year completed-age difference. After the younger person’s next birthday, they may be shown as 35 and 31. The underlying date-to-date gap remains exactly the same. This distinction is covered in <a href="/blog/why-completed-age-difference-changes/">why completed-age difference can appear to change</a>.</p>
+
+        <h3 id="india">Completed age and running age in India</h3>
+        <p>In India, forms often ask for age in completed years on a cut-off date. Running age means the year of life a person is now living, so it can be one number higher. Read the form carefully and use the date written in its rules.</p>
+        <p>The calculator on this page measures the fixed gap between two birth dates; it does not decide eligibility for an exam, government benefit, insurance product or legal requirement. For that use case, read <a href="/blog/completed-age-vs-running-age-india/">completed age versus running age in India</a> and verify the official rules that apply.</p>
+
+        <h3 id="uses">Common reasons to compare two ages</h3>
+        <ul>
+          <li><strong>Siblings:</strong> find the exact spacing between brothers and sisters using the <a href="/blog/sibling-age-difference/">sibling age-difference guide</a>.</li>
+          <li><strong>Couples:</strong> describe an age gap accurately without relying only on birth years.</li>
+          <li><strong>Parents and children:</strong> calculate how old a parent was when a child was born.</li>
+          <li><strong>Historical questions:</strong> determine how old one person was when another person was born.</li>
+          <li><strong>Records and research:</strong> check date-based comparisons in family histories, biographies or spreadsheets.</li>
+        </ul>
+
+        <h3 id="privacy">Accuracy, date format and privacy</h3>
+        <p>Always confirm the day, month and year before using a result. This site displays the date hint as DD/MM/YYYY for readers in India, while the browser may visually format a native date field according to the device’s language settings. A transposed day and month can produce a believable but incorrect answer, especially when both values are 12 or below.</p>
+        <p>Your entered dates are processed locally in the browser and are not submitted to this website’s server. Nevertheless, treat dates of birth as personal information and avoid sharing calculator screenshots that identify private individuals.</p>
+
+        <h3 id="summary">The simple answer</h3>
+        <p>For the exact answer, compare both full dates. Do not use only the birth years or current ages. The Age Difference Calculator shows years, months, days, total days and weeks. For a specific question, visit the <a href="/blog/">age difference guide library</a>.</p>
+      </article>
+
+      <aside class="pillar-nav" aria-label="On this page">
+        <strong>In this guide</strong>
+        <a href="#what-is-an-age-difference-calculator">What the calculator does</a>
+        <a href="#how-to-use">How to use it</a>
+        <a href="#understanding-result">Understanding the result</a>
+        <a href="#calendar-accuracy">Calendar accuracy</a>
+        <a href="#exact-gap-vs-completed-age">Exact gap vs completed age</a>
+        <a href="#india">Age conventions in India</a>
+        <a href="#uses">Common uses</a>
+        <a href="#privacy">Accuracy and privacy</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="faq-section" aria-labelledby="faq-title">
+    <div class="faq-layout wrap"><h2 id="faq-title">Common questions</h2><div class="faq-list">
+      <details open><summary>Does the age difference between two people ever change?</summary><p>The exact gap between two dates of birth stays constant. The difference between completed ages can appear to change between birthdays.</p></details>
+      <details open><summary>Does the calculator handle leap years?</summary><p>Yes. It uses real calendar dates and accounts for February 29 and different month lengths.</p></details>
+      <details open><summary>Are my dates of birth stored?</summary><p>No. The calculation runs in your browser and the entered dates are not sent to a server.</p></details>
+    </div></div>
+  </section>
+</BaseLayout>

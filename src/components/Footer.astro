@@ -1,0 +1,28 @@
+---
+import BrandMark from './BrandMark.astro';
+---
+<footer class="site-footer">
+  <div class="author-strip wrap">
+    <div class="author-icon" aria-hidden="true">✓</div>
+    <div><strong>Created and checked by Priyabrata Sen</strong><p>Read the <a href="/methodology/">calculation methodology</a> and <a href="/author/priyabrata-sen/">editorial process</a>.</p></div>
+  </div>
+  <div class="footer-inner wrap">
+    <div class="footer-brand"><a href="/"><BrandMark /><span>Age Difference Calculator</span></a><small>© 2026 Age Difference Calculator</small></div>
+    <nav aria-label="Footer navigation"><a href="/">Calculator</a><a href="/blog/">Guides</a><a href="/methodology/">Methodology</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a></nav>
+  </div>
+</footer>
+<style>
+  .site-footer { border-top: 1px solid var(--border); }
+  .author-strip { min-height: 118px; display: flex; align-items: center; gap: 24px; }
+  .author-icon { width: 64px; height: 64px; border: 2px solid var(--accent); border-radius: 50%; display: grid; place-items: center; color: var(--accent); font-size: 1.5rem; }
+  .author-strip strong { display: block; margin-bottom: 6px; }
+  .author-strip p { margin: 0; color: var(--muted); }
+  .footer-inner { min-height: 138px; display: flex; align-items: center; justify-content: space-between; gap: 36px; border-top: 1px solid var(--border); }
+  .footer-brand { display: grid; gap: 10px; }
+  .footer-brand a { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 750; }
+  .footer-brand small { color: var(--muted); }
+  nav { display: flex; flex-wrap: wrap; gap: 28px; }
+  nav a { color: var(--ink); text-decoration: none; font-size: .9rem; }
+  nav a:hover { color: var(--accent); }
+  @media (max-width: 760px) { .author-strip, .footer-inner { align-items: flex-start; flex-direction: column; padding-block: 32px; } nav { gap: 18px 24px; } }
+</style>

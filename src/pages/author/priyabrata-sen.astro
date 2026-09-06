@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const ld = { '@context': 'https://schema.org', '@type': 'Person', name: 'Priyabrata Sen', url: 'https://agedifferencecalculator.xyz/author/priyabrata-sen/', mainEntityOfPage: 'https://agedifferencecalculator.xyz/author/priyabrata-sen/', knowsAbout: ['age difference calculations', 'calendar date arithmetic'] };
+---
+<BaseLayout title="Priyabrata Sen – Author" description="Priyabrata Sen is the creator and author of Age Difference Calculator and its calendar calculation guides." structuredData={ld}>
+  <header class="page-heading wrap"><h1>Priyabrata Sen</h1><p>Creator and author of Age Difference Calculator.</p></header>
+  <article class="prose-page wrap"><h2>About the author</h2><p>Priyabrata Sen created this website to give readers a clear way to compare two complete dates of birth. He writes and checks the supporting guides, examples and calculator explanations published here.</p><h2>How the work is checked</h2><p>Calculator examples are tested across ordinary dates, month-end boundaries and leap years. Explanations distinguish exact date-of-birth gaps from the temporary difference between two completed ages.</p><h2>Published guides</h2><p>Priyabrata Sen has published {posts.length} guides on this site. Browse the complete <a href="/blog/">age difference guide library</a>.</p></article>
+</BaseLayout>

@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+<BaseLayout title="Age Difference Guides and Explanations" description="Practical guides to calculating age differences, comparing dates of birth, handling leap years and understanding exact calendar gaps." active="guides">
+  <header class="page-heading wrap"><h1>Age difference guides</h1><p>Clear, carefully checked explanations for comparing dates of birth and understanding exact calendar differences.</p></header>
+  <section class="article-list wrap" aria-label="All guides">
+    {posts.map((post, index) => <a class="article-list-item" href={`/blog/${post.id}/`}><span class="index">{String(index + 1).padStart(2, '0')}</span><div><h2>{post.data.title}</h2><p>{post.data.description}</p></div><span class="arrow" aria-hidden="true">→</span></a>)}
+  </section>
+</BaseLayout>

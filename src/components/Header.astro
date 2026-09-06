@@ -1,0 +1,80 @@
+---
+import BrandMark from './BrandMark.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const { active = '' } = Astro.props;
+const nav = [
+  { label: 'Calculator', href: '/#calculator', key: 'calculator' },
+  { label: 'Guides', href: '/blog/', key: 'guides' },
+  { label: 'How it works', href: '/#how-it-works', key: 'method' },
+  { label: 'About', href: '/about/', key: 'about' },
+];
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="Age Difference Calculator home">
+      <BrandMark />
+      <span>Age Difference Calculator</span>
+    </a>
+    <div class="header-actions">
+      <ThemeToggle />
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span class="sr-only">Open navigation</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
+      <nav id="primary-navigation" aria-label="Primary navigation" data-navigation>
+        {nav.map((item) => <a class:list={{ active: active === item.key }} href={item.href}>{item.label}</a>)}
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const bindMenu = () => {
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const nav = document.querySelector<HTMLElement>('[data-navigation]');
+    if (!toggle || !nav || toggle.dataset.bound) return;
+    toggle.dataset.bound = 'true';
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      toggle.setAttribute('aria-label', open ? 'Open navigation' : 'Close navigation');
+      toggle.querySelector<HTMLElement>('.sr-only')!.textContent = open ? 'Open navigation' : 'Close navigation';
+      nav.toggleAttribute('data-open', !open);
+    });
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation');
+      toggle.querySelector<HTMLElement>('.sr-only')!.textContent = 'Open navigation';
+      nav.removeAttribute('data-open');
+    }));
+  };
+  bindMenu();
+  document.addEventListener('astro:page-load', bindMenu);
+</script>
+
+<style>
+  .site-header { border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--page) 94%, transparent); position: relative; z-index: 20; }
+  .header-inner { width: min(100% - 48px, 1340px); height: 84px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 750; font-size: clamp(1rem, 1.6vw, 1.4rem); letter-spacing: -.025em; text-decoration: none; white-space: nowrap; }
+  .header-actions { display: flex; align-items: center; gap: 20px; }
+  nav { display: flex; align-self: stretch; gap: 36px; }
+  nav a { display: flex; align-items: center; color: var(--ink); text-decoration: none; font-size: .98rem; border-bottom: 4px solid transparent; padding-top: 4px; }
+  nav a:hover, nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .menu-toggle { display: none; width: 44px; height: 44px; padding: 9px; border: 0; background: transparent; color: var(--ink); }
+  .menu-toggle svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  @media (max-width: 880px) {
+    .header-inner { width: min(100% - 32px, 1340px); height: 72px; }
+    .header-actions { gap: 8px; }
+    .menu-toggle { display: block; }
+    nav { display: none; position: absolute; left: 16px; right: 16px; top: 64px; height: auto; padding: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); flex-direction: column; gap: 0; }
+    nav[data-open] { display: flex; }
+    nav a { width: 100%; min-height: 48px; padding: 0 12px; border: 0; border-radius: 8px; }
+    nav a:hover, nav a.active { background: var(--accent-soft); }
+  }
+  @media (max-width: 560px) {
+    .header-inner { width: min(100% - 24px, 1340px); gap: 8px; }
+    .brand { gap: 8px; font-size: .98rem; }
+  }
+</style>
