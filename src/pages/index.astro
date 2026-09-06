@@ -15,9 +15,32 @@ const featuredIds = [
 const featuredPosts = await getCollection('blog', ({ data }) => !data.draft && data.featured);
 const postsById = new Map(featuredPosts.map((post) => [post.id, post]));
 const posts = featuredIds.map((id) => postsById.get(id)).filter((post) => post !== undefined);
+const faqItems = [
+  {
+    question: 'Does the age difference between two people ever change?',
+    answer: 'The exact gap between two dates of birth stays constant. The difference between completed ages can appear to change between birthdays.',
+  },
+  {
+    question: 'Does the calculator handle leap years?',
+    answer: 'Yes. It uses real calendar dates and accounts for February 29 and different month lengths.',
+  },
+  {
+    question: 'Are my dates of birth stored?',
+    answer: 'No. The calculation runs in your browser and the entered dates are not sent to a server.',
+  },
+];
 const ld = [
   { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Age Difference Calculator', url: 'https://agedifferencecalculator.xyz/', inLanguage: 'en-IN', author: { '@type': 'Person', name: 'Priyabrata Sen', url: 'https://agedifferencecalculator.xyz/author/priyabrata-sen/' } },
   { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'Age Difference Calculator', url: 'https://agedifferencecalculator.xyz/', applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any', browserRequirements: 'Requires JavaScript', offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' }, description: 'Calculate the exact age difference between two people in years, months and days.', author: { '@type': 'Person', name: 'Priyabrata Sen' } },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
 ];
 ---
 <BaseLayout title="Age Difference Calculator – Exact Age Gap" description="Calculate the exact age difference between two people in years, months and days. Find who is older, total days apart and more." active="calculator" structuredData={ld}>
@@ -126,9 +149,7 @@ const ld = [
 
   <section class="faq-section" aria-labelledby="faq-title">
     <div class="faq-layout wrap"><h2 id="faq-title">Common questions</h2><div class="faq-list">
-      <details open><summary>Does the age difference between two people ever change?</summary><p>The exact gap between two dates of birth stays constant. The difference between completed ages can appear to change between birthdays.</p></details>
-      <details open><summary>Does the calculator handle leap years?</summary><p>Yes. It uses real calendar dates and accounts for February 29 and different month lengths.</p></details>
-      <details open><summary>Are my dates of birth stored?</summary><p>No. The calculation runs in your browser and the entered dates are not sent to a server.</p></details>
+      {faqItems.map((item) => <details open><summary>{item.question}</summary><p>{item.answer}</p></details>)}
     </div></div>
   </section>
 </BaseLayout>

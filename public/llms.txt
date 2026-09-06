@@ -1,0 +1,27 @@
+# Age Difference Calculator
+
+> A free, India-focused calculator and plain-language guide library for comparing two dates of birth. It shows the exact age gap in calendar years, months and days, along with total days and weeks. The site is written by Priyabrata Sen, and calculations run locally in the user's browser.
+
+## Core pages
+
+- [Age Difference Calculator](https://agedifferencecalculator.xyz/): Compare two complete dates of birth and find who is older and the exact age difference.
+- [How the calculation works](https://agedifferencecalculator.xyz/methodology/): Read the calendar method, date rules, limits and calculation examples.
+- [Age difference guides](https://agedifferencecalculator.xyz/blog/): Browse all simple guides about age gaps, birthdays and date calculations.
+- [About the author](https://agedifferencecalculator.xyz/author/priyabrata-sen/): Information about Priyabrata Sen, the site's author and publisher.
+
+## Key guides
+
+- [How to calculate age difference](https://agedifferencecalculator.xyz/blog/how-to-calculate-age-difference/): A step-by-step explanation using full dates of birth.
+- [Birth-year difference versus exact age gap](https://agedifferencecalculator.xyz/blog/birth-year-difference-vs-exact-age-gap/): Why subtracting birth years can give a misleading answer.
+- [Completed age versus running age in India](https://agedifferencecalculator.xyz/blog/completed-age-vs-running-age-india/): A simple explanation of two age terms often used in India.
+- [Age difference in years, months and days](https://agedifferencecalculator.xyz/blog/age-difference-years-months-days/): How each part of an exact calendar result should be read.
+- [Age difference in total days, weeks and months](https://agedifferencecalculator.xyz/blog/age-difference-total-days-weeks-months/): Understand the different ways an age gap can be expressed.
+- [Age gaps and leap years](https://agedifferencecalculator.xyz/blog/calculate-age-gap-leap-years/): How February 29 and leap years affect date calculations.
+- [Sibling age difference](https://agedifferencecalculator.xyz/blog/sibling-age-difference/): Compare the dates of birth of brothers and sisters.
+- [Parent and child age difference](https://agedifferencecalculator.xyz/blog/parent-child-age-difference/): Find the exact age gap between a parent and child.
+
+## Site information
+
+- [Privacy policy](https://agedifferencecalculator.xyz/privacy/): How the website handles dates, analytics and personal information.
+- [Contact](https://agedifferencecalculator.xyz/contact/): Contact information for the publisher.
+- [XML sitemap](https://agedifferencecalculator.xyz/sitemap-index.xml): Machine-readable list of indexable pages.
