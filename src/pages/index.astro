@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Calculator from '../components/Calculator.astro';
+import AdSlot from '../components/AdSlot.astro';
 import { getCollection } from 'astro:content';
 
 const featuredIds = [
@@ -39,6 +40,8 @@ const ld = [
     </div>
   </section>
 
+  <AdSlot placement="homepage-after-explanation" />
+
   <section class="guides-section wrap" aria-labelledby="guides-title">
     <h2 id="guides-title">Helpful age difference guides</h2>
     <p class="section-lede">Clear explanations for the questions people ask after comparing two dates of birth.</p>
@@ -76,6 +79,8 @@ const ld = [
         </div>
         <p>Total days answer a different question: the number of midnights crossed between the two dates. Total weeks are calculated from that day count. For a fuller explanation, see <a href="/blog/age-difference-total-days-weeks-months/">age difference in days, weeks and months</a>.</p>
 
+        <AdSlot placement="homepage-mid-guide" variant="in-content" />
+
         <h3 id="calendar-accuracy">Why the calculator uses real calendar dates</h3>
         <p>A calendar year is not always 365 days, and a calendar month is not a fixed number of days. February may contain 28 or 29 days, while other months contain 30 or 31. Dividing the total number of days by 365 or dividing by 30 can therefore produce a decimal estimate rather than an exact calendar result.</p>
         <p>This calculator counts full years first, full months second and the days left last. If a month does not have the same day number, it uses the last valid day of that month. Read <a href="/methodology/">how the calculator works</a>, or learn about <a href="/blog/calculate-age-gap-leap-years/">leap years</a> and <a href="/blog/month-lengths-age-calculation/">months with different lengths</a>.</p>
@@ -98,7 +103,7 @@ const ld = [
         </ul>
 
         <h3 id="privacy">Accuracy, date format and privacy</h3>
-        <p>Always confirm the day, month and year before using a result. This site displays the date hint as DD/MM/YYYY for readers in India, while the browser may visually format a native date field according to the device’s language settings. A transposed day and month can produce a believable but incorrect answer, especially when both values are 12 or below.</p>
+        <p>Always confirm the day, month and year before using a result. The calculator uses separate DD, MM and YYYY fields, so you can enter each part directly without opening a calendar. A transposed day and month can produce a believable but incorrect answer, especially when both values are 12 or below.</p>
         <p>Your entered dates are processed locally in the browser and are not submitted to this website’s server. Nevertheless, treat dates of birth as personal information and avoid sharing calculator screenshots that identify private individuals.</p>
 
         <h3 id="summary">The simple answer</h3>

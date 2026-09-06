@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -25,6 +26,7 @@ const articleLd = [
 <BaseLayout title={`${post.data.title} | Age Difference Calculator`} description={post.data.description} active="guides" type="article" structuredData={articleLd}>
   <nav class="breadcrumbs wrap" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/blog/">Guides</a></li><li aria-current="page">{post.data.title}</li></ol></nav>
   <header class="article-header wrap"><h1>{post.data.title}</h1><p class="standfirst">{post.data.description}</p><div class="article-meta"><span>Written by <a href="/author/priyabrata-sen/">Priyabrata Sen</a></span><span>{readingMinutes} min read</span></div></header>
+  <AdSlot placement="article-after-introduction" />
   <div class="article-grid wrap">
     <article class="article-content">
       <Content />

@@ -1,0 +1,21 @@
+---
+interface Props {
+  placement: string;
+  variant?: 'banner' | 'in-content';
+}
+
+const { placement, variant = 'banner' } = Astro.props;
+---
+<!-- Reserved for AdSense. Keep hidden until approval and real publisher/ad-slot IDs are available. -->
+<aside class:list={['ad-slot', `ad-slot--${variant}`]} data-ad-placement={placement} aria-label="Advertisement" hidden>
+  <span class="ad-label">Advertisement</span>
+  <div class="ad-unit" data-ad-unit></div>
+</aside>
+
+<style>
+  .ad-slot { width: min(100%, 970px); min-height: 120px; margin: 44px auto; padding: 8px; text-align: center; }
+  .ad-slot--in-content { width: 100%; min-height: 280px; margin-block: 40px; }
+  .ad-label { display: block; margin-bottom: 7px; color: var(--muted); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+  .ad-unit { min-height: inherit; }
+  @media (max-width: 760px) { .ad-slot { min-height: 100px; margin-block: 32px; }.ad-slot--in-content { min-height: 250px; } }
+</style>

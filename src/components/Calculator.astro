@@ -1,11 +1,33 @@
-<section class="calculator-shell" id="calculator" aria-labelledby="calculator-title">
+---
+const days = Array.from({ length: 31 }, (_, index) => index + 1);
+const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: currentYear - 1899 }, (_, index) => currentYear - index);
+---
+<section class="calculator-shell" id="calculator" aria-label="Age difference calculator">
   <form class="calculator-form" data-calculator novalidate>
     <div class="date-row">
-      <label class="date-field"><span>First person’s date of birth</span><input name="firstDate" type="date" value="1988-06-04" required /><small>DD/MM/YYYY</small></label>
+      <fieldset class="date-field" data-date-group="first" aria-describedby="first-date-hint">
+        <legend>First person’s date of birth</legend>
+        <div class="date-parts">
+          <label class="date-part"><span>Day</span><select name="firstDay" aria-label="First person’s birth day" required><option value="">DD</option>{days.map((day) => <option value={day}>{String(day).padStart(2, '0')}</option>)}</select></label>
+          <label class="date-part"><span>Month</span><select name="firstMonth" aria-label="First person’s birth month" required><option value="">Month</option>{months.map((month, index) => <option value={index + 1}>{month}</option>)}</select></label>
+          <label class="date-part year"><span>Year</span><select name="firstYear" aria-label="First person’s birth year" required><option value="">YYYY</option>{years.map((year) => <option value={year}>{year}</option>)}</select></label>
+        </div>
+        <small id="first-date-hint">Enter as DD / MM / YYYY</small>
+      </fieldset>
       <button class="swap-connector" type="button" data-swap aria-label="Swap dates">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 3-3m-3 3 3 3M7 7h10M17 17l-3-3m3 3-3 3M17 17H7" /></svg>
       </button>
-      <label class="date-field"><span>Second person’s date of birth</span><input name="secondDate" type="date" value="1993-01-19" required /><small>DD/MM/YYYY</small></label>
+      <fieldset class="date-field" data-date-group="second" aria-describedby="second-date-hint">
+        <legend>Second person’s date of birth</legend>
+        <div class="date-parts">
+          <label class="date-part"><span>Day</span><select name="secondDay" aria-label="Second person’s birth day" required><option value="">DD</option>{days.map((day) => <option value={day}>{String(day).padStart(2, '0')}</option>)}</select></label>
+          <label class="date-part"><span>Month</span><select name="secondMonth" aria-label="Second person’s birth month" required><option value="">Month</option>{months.map((month, index) => <option value={index + 1}>{month}</option>)}</select></label>
+          <label class="date-part year"><span>Year</span><select name="secondYear" aria-label="Second person’s birth year" required><option value="">YYYY</option>{years.map((year) => <option value={year}>{year}</option>)}</select></label>
+        </div>
+        <small id="second-date-hint">Enter as DD / MM / YYYY</small>
+      </fieldset>
     </div>
     <p class="form-error" data-error role="alert" hidden></p>
     <div class="form-actions">
@@ -15,11 +37,11 @@
         <button class="button secondary" type="reset">↶ <span>Reset</span></button>
       </div>
     </div>
-    <div class="result" data-result aria-live="polite">
-      <div class="result-label"><span class="check" aria-hidden="true">✓</span><h2 id="calculator-title">Exact age difference</h2></div>
-      <p class="result-statement" data-statement>The first person is older by</p>
-      <p class="result-value"><strong data-years>4</strong> <span data-year-unit>years</span> <strong data-months>7</strong> <span data-month-unit>months</span> <strong data-days>15</strong> <span data-day-unit>days</span></p>
-      <div class="result-totals"><span data-total-days>1,690 days apart</span><span data-weeks>241 weeks and 3 days</span></div>
+    <div class="result" data-result aria-live="polite" hidden>
+      <div class="result-label"><span class="check" aria-hidden="true">✓</span><h2>Exact age difference</h2></div>
+      <p class="result-statement" data-statement></p>
+      <p class="result-value"><strong data-years></strong> <span data-year-unit></span> <strong data-months></strong> <span data-month-unit></span> <strong data-days></strong> <span data-day-unit></span></p>
+      <div class="result-totals"><span data-total-days></span><span data-weeks></span></div>
       <p class="privacy-note"><span aria-hidden="true">▣</span> Your dates stay on this device.</p>
     </div>
   </form>
@@ -31,13 +53,30 @@
     const form = document.querySelector<HTMLFormElement>('[data-calculator]');
     if (!form || form.dataset.bound) return;
     form.dataset.bound = 'true';
-    const first = form.elements.namedItem('firstDate') as HTMLInputElement;
-    const second = form.elements.namedItem('secondDate') as HTMLInputElement;
+    const field = (name: string) => form.elements.namedItem(name) as HTMLSelectElement;
+    const first = [field('firstDay'), field('firstMonth'), field('firstYear')];
+    const second = [field('secondDay'), field('secondMonth'), field('secondYear')];
     const error = form.querySelector<HTMLElement>('[data-error]')!;
     const result = form.querySelector<HTMLElement>('[data-result]')!;
+
+    const readDate = (fields: HTMLSelectElement[], person: string) => {
+      const [dayText, monthText, yearText] = fields.map((select) => select.value);
+      if (!dayText || !monthText || !yearText) throw new Error(`Enter the complete date of birth for the ${person} person.`);
+      const day = Number(dayText), month = Number(monthText), year = Number(yearText);
+      const date = parseDateInput(`${yearText}-${monthText.padStart(2, '0')}-${dayText.padStart(2, '0')}`);
+      if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) throw new Error(`Enter a valid date of birth for the ${person} person.`);
+      return date;
+    };
+
     const render = () => {
-      if (!first.value || !second.value) { error.textContent = 'Choose both dates of birth.'; error.hidden = false; result.hidden = true; return; }
-      const a = parseDateInput(first.value); const b = parseDateInput(second.value);
+      let a: Date, b: Date;
+      try {
+        a = readDate(first, 'first');
+        b = readDate(second, 'second');
+      } catch (problem) {
+        error.textContent = problem instanceof Error ? problem.message : 'Check both dates and try again.';
+        error.hidden = false; result.hidden = true; return;
+      }
       const today = new Date(); const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
       if (a.getTime() > todayUtc || b.getTime() > todayUtc) { error.textContent = 'Dates of birth cannot be in the future.'; error.hidden = false; result.hidden = true; return; }
       const diff = calendarDifference(a, b);
@@ -54,9 +93,12 @@
       form.querySelector('[data-weeks]')!.textContent = `${weeks.toLocaleString('en-IN')} weeks and ${remainder} ${remainder === 1 ? 'day' : 'days'}`;
     };
     form.addEventListener('submit', (event) => { event.preventDefault(); render(); });
-    form.querySelectorAll<HTMLButtonElement>('[data-swap]').forEach((button) => button.addEventListener('click', () => { [first.value, second.value] = [second.value, first.value]; render(); }));
-    form.addEventListener('reset', () => setTimeout(() => { first.value = ''; second.value = ''; error.hidden = true; result.hidden = true; }, 0));
-    render();
+    form.querySelectorAll<HTMLButtonElement>('[data-swap]').forEach((button) => button.addEventListener('click', () => {
+      first.forEach((input, index) => { [input.value, second[index].value] = [second[index].value, input.value]; });
+      error.hidden = true;
+      if (!result.hidden) render();
+    }));
+    form.addEventListener('reset', () => setTimeout(() => { error.hidden = true; result.hidden = true; }, 0));
   };
   bindCalculator();
   document.addEventListener('astro:page-load', bindCalculator);
