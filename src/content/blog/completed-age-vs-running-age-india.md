@@ -26,6 +26,8 @@ In the example above, Riya has completed 25 years and is living her 26th year. P
 
 Running age is common in normal conversation, but it may not be accepted on an official form.
 
+A simple way to say it is: after completing 25 years, the 26th year of life is running. This does not normally mean the person is already 26 years old.
+
 ## What is exact age?
 
 Exact age includes years, months and days.
@@ -36,6 +38,24 @@ For example:
 
 This gives more detail than completed or running age.
 
+## Example before, on and after a birthday
+
+Suppose Aman was born on 15 November 2001.
+
+- On 14 November 2026, his completed age is 24.
+- On 15 November 2026, he completes 25 years.
+- On 16 November 2026, his completed age is still 25 and his 26th year is running.
+
+The birthday changes the completed age. The running year changes at the same point but is usually one number higher.
+
+## What does “age as on” mean?
+
+“Age as on” means age on a stated cut-off date. It may not mean age today or age on the application date.
+
+For example, a notice may ask for age as on 1 January 2027. Compare the date of birth with 1 January 2027, even if you fill in the form several months earlier.
+
+Read the complete notice because different organisations can set different rules, age limits and relaxations.
+
 ## Which age should you write on a form?
 
 Read the form carefully.
@@ -43,5 +63,23 @@ Read the form carefully.
 - If it asks for completed years, write only the full years finished.
 - If it gives a cut-off date, calculate age on that date.
 - If it asks for date of birth, enter the date exactly as shown on your document.
+- If it asks for age today, use today as the comparison date.
+- If it uses an age range, check whether both end limits are included.
 
 For exams, jobs, insurance or government work, always follow the official notice. Do not guess from normal conversation.
+
+## Common mistakes on Indian forms
+
+- Writing running age when the form asks for completed years.
+- Calculating from today instead of the given cut-off date.
+- Reading 06/09/2000 as 9 June instead of 6 September.
+- Subtracting only the year numbers without checking the birthday.
+- Assuming that an online calculator decides eligibility.
+
+An age calculator can help with the date maths. It cannot apply category relaxation, document rules or special conditions unless those rules are entered and checked separately.
+
+## Quick rule to remember
+
+Completed age is the number of full years already lived. Running age usually names the year of life now underway. Exact age adds the remaining months and days.
+
+When a form gives its own definition, follow that definition instead of the everyday meaning.
