@@ -1,6 +1,6 @@
 ---
-title: "Completed Age vs Running Age in India"
-description: "Understand completed age, running age and exact age in simple words for Indian forms and daily use."
+title: "Completed Age vs Running Age: Meaning and Examples in India"
+description: "Understand completed age and running age in simple words, including what 18, 20 and 25 running age mean on Indian forms."
 cluster: comparisons
 relatedPosts: ["why-completed-age-difference-changes", "age-difference-years-months-days", "date-format-mistakes-age-calculators"]
 featured: true
@@ -48,6 +48,16 @@ Suppose Aman was born on 15 November 2001.
 
 The birthday changes the completed age. The running year changes at the same point but is usually one number higher.
 
+## What do common running-age numbers mean?
+
+The rule is the same at every age: the running age is usually one more than the completed age.
+
+- **18 running age** usually means 17 full years are completed and the 18th year has started.
+- **20 running age** usually means 19 full years are completed and the 20th year has started.
+- **25 running age** usually means 24 full years are completed and the 25th year has started.
+
+This is everyday wording, not a replacement for the wording on an official form. If a notice says “completed years,” write the completed age instead.
+
 ## What does “age as on” mean?
 
 “Age as on” means age on a stated cut-off date. It may not mean age today or age on the application date.
@@ -82,4 +92,4 @@ An age calculator can help with the date maths. It cannot apply category relaxat
 
 Completed age is the number of full years already lived. Running age usually names the year of life now underway. Exact age adds the remaining months and days.
 
-When a form gives its own definition, follow that definition instead of the everyday meaning.
+When a form gives its own definition, follow that definition instead of the everyday meaning. To compare two birth dates in years, months and days, use the [Age Difference Calculator](/#calculator). You can also read why the [completed-age difference can appear to change](/blog/why-completed-age-difference-changes/) between birthdays.
